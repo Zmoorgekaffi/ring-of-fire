@@ -1,0 +1,60 @@
+@for (player of game.players; track game.players; let i = $index) {
+    <app-profile-section class="player-position" [ngStyle]="{'top.px': 120 * i}" [playerNameInput]="game.players[i]"></app-profile-section>
+}
+
+<button mat-fab color="primary" class="add-btn">
+    <mat-icon>add</mat-icon>
+</button>
+
+<div id="field">
+
+    <div class="card-stack">
+        <!-- card stack -->
+        @if(game.stack.length > 4) {
+            @for (img of [0,1,2,3]; track img; let index = $index) {
+            <img [ngStyle]="{ 'left.px': ((index * 6))}" src="/assets/cards/playing_cards-master/card_cover.png" alt="">
+            }
+            <img (click)="takeCard()" class="top-card" [ngStyle]="{ 'left.px': 4 * 6 }" src="/assets/cards/playing_cards-master/card_cover.png" alt="">
+        } 
+        
+        @else if (game.stack.length > 3) {
+            @for (img of [0,1,2]; track img; let index = $index) {
+                <img [ngStyle]="{ 'left.px': ((index * 6))}" src="/assets/cards/playing_cards-master/card_cover.png" alt="">
+            }
+            <img (click)="takeCard()" class="top-card" [ngStyle]="{ 'left.px': 3 * 6 }" src="/assets/cards/playing_cards-master/card_cover.png" alt="">
+        } 
+        
+        @else if (game.stack.length > 2) {
+            @for (img of [0,1]; track img; let index = $index) {
+                <img [ngStyle]="{ 'left.px': ((index * 6))}" src="/assets/cards/playing_cards-master/card_cover.png" alt="">
+            }
+            <img (click)="takeCard()" class="top-card" [ngStyle]="{ 'left.px': 2 * 6 }" src="/assets/cards/playing_cards-master/card_cover.png" alt="">
+        } 
+        
+        @else if (game.stack.length > 1) {
+            @for (img of [0]; track img; let index = $index) {
+                <img [ngStyle]="{ 'left.px': ((index * 6))}" src="/assets/cards/playing_cards-master/card_cover.png" alt="">
+            }
+            <img (click)="takeCard()" class="top-card" [ngStyle]="{ 'left.px': 1 * 6 }" src="/assets/cards/playing_cards-master/card_cover.png" alt="">
+        } 
+        
+        @else if (game.stack.length > 0) {
+            <img (click)="takeCard()" class="top-card" [ngStyle]="{ 'left.px': 0 * 6 }" src="/assets/cards/playing_cards-master/card_cover.png" alt="">
+        } 
+
+        <!-- stack for played cards -->
+        @for (card of game.playedCards; track $index) {
+            @if(game.playedCards.length > 0) {
+                <img class="lastCardPutOnStack"
+                [ngStyle]="{ 'left.px': 4 * 6 }" src="/assets/cards/playing_cards-master/{{ card }}.png" alt="">
+            }  
+        }
+        
+        <!-- current card animation -->
+        @if (pickCardAnimation) {
+          <img [ngClass]="{ 'top-card': !pickCardAnimation ,'picked-card': pickCardAnimation }"
+          [ngStyle]="{ 'left.px': 4 * 6 }" src="/assets/cards/playing_cards-master/{{ currentCard }}.png" alt="">
+        }
+
+    </div>
+</div>

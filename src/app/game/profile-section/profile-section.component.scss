@@ -1,0 +1,21 @@
+@import '../../../styles.scss';
+div {
+    @include d-flex($jc: flex-start);
+    @include div-sizing(300px, 100px);
+    background-color: orange;
+    right: 0;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;    
+    img {
+        margin-left: 20px;
+        object-fit: cover;
+        @include div-sizing($width: 30%, $height: 80%);
+        border-radius: 100%;
+    }
+    span {
+        margin-left: 16px;
+        font-size: 32px;
+        font-weight: bold;
+    }
+}
+

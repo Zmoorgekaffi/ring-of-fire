@@ -1,0 +1,53 @@
+@import "../../styles.scss";
+
+.start-screen {
+    background-position: center;
+    background-position-x: 20px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: rgb(32, 22, 32);
+    position: relative;
+    @include div-sizing();
+    @include d-flex();
+
+    >img:nth-child(1) {
+        object-fit: cover;
+        @include div-sizing();
+    }
+
+    >div {
+        @include d-flex();
+        @include div-sizing();
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+
+        >div {
+            position: absolute;
+            transform: translateY(16px);
+
+            >h1 {
+                font-size: 1.5rem;
+                font-family: 'Rubik Scribble';
+                font-weight: bold;
+            }
+        }
+
+        >img {
+            @include d-flex();
+            @include div-sizing($width: 20%, $height: 30%);
+            min-width: 236px;
+            min-height: 180px;
+        }
+    }
+
+}
+
+.hover {
+    &:hover {
+        cursor: pointer;
+        filter: brightness(0.8);
+    }
+}
