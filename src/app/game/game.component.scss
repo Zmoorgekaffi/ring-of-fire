@@ -6,6 +6,7 @@
     @include d-flex();
     background-repeat: no-repeat;
     background-size: cover;
+    position: relative;
 }
 
 .card-stack {
@@ -43,6 +44,13 @@
     right: 32px;
     bottom: 32px;
     background-color: rgb(197, 128, 0);
+}
+
+.info-card{
+    position: absolute;
+    bottom: 120px;
+    left: 120px;
+    right: 240px;
 }
 
 @keyframes picked-card-keyframe {
