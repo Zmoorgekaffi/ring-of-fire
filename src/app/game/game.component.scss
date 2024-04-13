@@ -10,6 +10,7 @@
 }
 
 .card-stack {
+    transform: translateX(-120px);
     position: relative;
     img {
         position: absolute;
@@ -48,9 +49,9 @@
 
 .info-card{
     position: absolute;
-    bottom: 120px;
-    left: 120px;
-    right: 240px;
+    bottom: 72px;
+    left: 116px;
+    right: 336px;
 }
 
 @keyframes picked-card-keyframe {
@@ -65,5 +66,17 @@
     }
     100% {
         transform: translateX(150px) translateY(-150px) rotate(-10deg);
+    }
+}
+
+@media (max-width: 742px) {
+    .info-card {
+        right: 196px;
+    }
+}
+
+@media (max-width: 620px) {
+    .info-card {
+        right: 160px;
     }
 }

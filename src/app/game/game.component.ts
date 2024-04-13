@@ -41,7 +41,7 @@ export class GameComponent {
   }
 
   takeCard(): void {
-    if (this.pickCardAnimation == false && this.game.stack.length > 0) {
+    if (this.pickCardAnimation == false && this.game.stack.length > 0 && this.game.players.length !== 0) {
       this.pickCardAnimation = true;
       this.currentCard = this.game.stack.pop()!;
 
@@ -50,25 +50,35 @@ export class GameComponent {
         this.game.playedCards.push(this.currentCard);
         this.nextPlayer();
       }, 1000);
+    } 
+    else if(this.game.players.length === 0) {
+      alert('Please add players first');
     }
   }
 
-  nextPlayer(): void {
-    if(this.game.currentPlayer === this.game.players.length - 1) {
-      this.game.currentPlayer = 0;
-    } else {
-      this.game.currentPlayer++;
-    }
+  // nextPlayer(): void {
+  //   if(this.game.currentPlayer === this.game.players.length - 1) {
+  //     this.game.currentPlayer = 0;
+  //   } else {
+  //     this.game.currentPlayer++;
+  //   }
+  // }
+
+  nextPlayer() {
+    this.game.currentPlayer++;
+    this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+  }
+
+  addPlayerToPlayersArray(name: string) {
+    this.game.players.push(name);
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddPlayerComponent);
 
     dialogRef.afterClosed().subscribe((name:string) => {
-      this.game.players.push(name);
+      this.addPlayerToPlayersArray(name);
     });
   }
 
 }
-
-

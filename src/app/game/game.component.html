@@ -1,11 +1,14 @@
+
+<!-- player display -->
 @for (player of game.players; track game.players; let i = $index) {
-<app-profile-section class="player-position" [ngStyle]="{'top.px': 10 +  (120 * i)}"
+    <app-profile-section style="z-index: 9998;" class="player-position" [ngStyle]="{'top.px': 10 +  (120 * i)}"
     [playerNameInput]="game.players[i]"
     [playerIsActive]="game.currentPlayer === i"
     ></app-profile-section>
 
 }
 
+<!-- add button (FAB) -->
 @if(game.players.length < 8) {
     <button mat-fab style="z-index: 9999;" color="primary" class="add-btn" (click)="openDialog()">
       <mat-icon>add</mat-icon>
@@ -15,7 +18,7 @@
 
     <div id="field">
 
-        <div class="card-stack">
+        <div class="card-stack" >
             <!-- card stack -->
             @if(game.stack.length > 4) {
             @for (img of [0,1,2,3]; track img; let index = $index) {
@@ -71,4 +74,7 @@
         </div>
     </div>
 
-    <app-game-info [card]="currentCard" class="info-card"></app-game-info>
+    <!-- game info -->
+    @if(currentCard !== '' && game.players.length !== 0) {
+        <app-game-info [card]="currentCard" class="info-card"></app-game-info>
+    }

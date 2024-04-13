@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, input } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 
 @Component({
@@ -20,24 +20,23 @@ export class GameInfoComponent implements OnInit, OnChanges {
     { title: 'Chicks', description: 'All girls drink.' },
     { title: 'Heaven', description: 'Put your hands up! The last player drinks!' },
     { title: 'Mate', description: 'Pick a mate. Your mate must always drink when you drink and the other way around.' },
-    { title: 'Thumbmaster', description: '' },
+    { title: 'Thumbmaster', description: '"The player who draws the card becomes the \"Thumb Master\" and can place their thumb on the table at any time. Everyone else must imitate this action. The last person to place their thumb on the table must drink.' },
     { title: 'Men', description: 'All men drink.' },
-    { title: 'Quizmaster', description: '' },
+    { title: 'Quizmaster', description: 'You\'re now the Quizmaster! Your main task is to ask questions to the other players. Be creative and keep the game lively! The other players must answer the Quizmaster\'s questions and be ready for any penalties or challenges if their answers are deemed incorrect.' },
     { title: 'Never have i ever...', description: 'Say something you nnever did. Everyone who did it has to drink.' },
     { title: 'Rule', description: 'Make a rule. Everyone needs to drink when he breaks the rule.' },
   ];
 
   cardTitle:string = '';
   cardDescription:string = '';
-  @Input() card!:string; 
+  @Input() card:string = ''; 
 
   ngOnChanges() {
-
-    let cardNumber: number = +this.card.split('_')[1];
-    this.cardTitle = this.cardAction[cardNumber! - 1].title;
-    this.cardDescription = this.cardAction[cardNumber! -1 ].description;
-    console.log('this card:' , cardNumber, ' | title:', this.cardTitle, ' | description:', this.cardDescription);
-
+    if(this.card && !isNaN(+this.card.split('_')[1]) && typeof +this.card.split('_')[1] === "number") {
+      let cardNumber: number = +this.card.split('_')[1];
+      this.cardTitle = this.cardAction[cardNumber - 1].title;
+      this.cardDescription = this.cardAction[cardNumber - 1].description;
+    }
   }
 
   ngOnInit() {
