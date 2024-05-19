@@ -20,6 +20,15 @@ export class Game {
         this.shuffle(this.stack);
     }
 
+    public toJSON(){
+        return {
+            players: this.players,
+            stack: this.stack,
+            playedCards: this.playedCards,
+            currentPlayer: this.currentPlayer
+        }
+      }
+
     shuffle(array:string[]) {
         let currentIndex = array.length;
       
