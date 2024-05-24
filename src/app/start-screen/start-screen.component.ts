@@ -21,11 +21,13 @@ export class StartScreenComponent {
 
   startNewGame() {
     let game = new Game()
-    game.players.push('hansitest1');
-    this.fireService.addGame((game).toJSON()).then( () => {
-       this.router.navigateByUrl(`/game/${this.fireService.gameId}`);
-    }).catch((err)=>{
-      console.warn(err);
+    game.players.push('ben');
+    this.fireService.addGame((game).toJSON()).then( (gameId) => {
+      if(gameId){
+        this.router.navigateByUrl(`/game/${gameId}`);
+      } else {
+        console.error('spiel konnte nicht erstellt werden.')
+      }
     });
   }
 }

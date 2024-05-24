@@ -38,20 +38,15 @@ export class FirebaseServiceService {
     // });
   }
 
-  subSingleGame(paramId: string): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
+  subSingleGame(paramId: string) {
       this.unsubSingleGame = onSnapshot(doc(this.getColRef('games'), paramId), (doc) => {
         if (doc.exists()) {
           let docData = doc.data();
           this.copyDocDataToGameData(docData);
-          resolve();
         } else {
-          reject('Dokument wurde nicht gefunden');
+          console.warn('das spiel kontte nicht geladen werden!')
         }
-      }, (error) => {
-        reject(error);
-      });
-    });
+      })
   }
 
   copyDocDataToGameData(docData: any) {
@@ -65,17 +60,13 @@ export class FirebaseServiceService {
     return collection(this.firestore, colId);
   }
 
-  async addGame(game: any): Promise<void> {
-    return new Promise((resolve, reject) => {
-      addDoc(this.getColRef('games'), game)
-      .then((gameInfo: any) => {
-        this.gameId = gameInfo['id'];
-        resolve();
-      })
-      .catch((err) => {
-        reject(err);
-      });
-    });
+  async addGame(game: any){
+    try {
+      let newGame = await addDoc(this.getColRef('games'), game);
+      return newGame['id'];
+    } catch (error) {
+      return false;
+    }
   }
 
   ngOnDestroy() {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Game } from '../../models/game';
 import { ProfileSectionComponent } from './profile-section/profile-section.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -39,7 +39,7 @@ export class GameComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.newGame();
+    //this.newGame();
     this.aRoute.params.subscribe((params) => {
       this.firebaseService.subSingleGame(params['id']).then( () => {
         this.updateGameData();
@@ -101,4 +101,6 @@ export class GameComponent implements OnInit {
       this.addPlayerToPlayersArray(name);
     });
   }
+
+  
 }
