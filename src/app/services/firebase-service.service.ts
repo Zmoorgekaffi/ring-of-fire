@@ -2,7 +2,7 @@ import { Injectable, inject, OnDestroy } from '@angular/core';
 import { Firestore, collection, doc, onSnapshot, addDoc } from '@angular/fire/firestore';
 import { unsubscribe } from 'node:diagnostics_channel';
 import { stringify } from 'node:querystring';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { GameComponent } from '../game/game.component';
 import { log } from 'node:console';
 
@@ -38,15 +38,22 @@ export class FirebaseServiceService {
     // });
   }
 
-  subSingleGame(paramId: string) {
+  subSingleGame(paramId: string): Observable<any> {
+    return new Observable((observer) => {
       this.unsubSingleGame = onSnapshot(doc(this.getColRef('games'), paramId), (doc) => {
         if (doc.exists()) {
           let docData = doc.data();
           this.copyDocDataToGameData(docData);
+          observer.next(this.gameData);
         } else {
-          console.warn('das spiel kontte nicht geladen werden!')
+          console.warn('das spiel kontte nicht geladen werden!');
+          observer.error('das spiel konnte nicht geladen werden!')
         }
-      })
+      }, (error) => {
+        console.warn('Fehler beim laden des Spiels: ', error);
+      });
+    return () => this.unsubSingleGame();
+    });
   }
 
   copyDocDataToGameData(docData: any) {

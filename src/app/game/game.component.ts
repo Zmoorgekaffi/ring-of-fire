@@ -28,33 +28,40 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss'
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
 
   currentCard: string = '';
   pickCardAnimation: boolean = false;
   public game: Game;
+  gameSub: any;
 
   constructor(public dialog: MatDialog, public firebaseService: FirebaseServiceService, private aRoute: ActivatedRoute) {
     this.game = new Game;
    }
 
-  ngOnInit(): void {
-    //this.newGame();
+  ngOnInit(){
     this.aRoute.params.subscribe((params) => {
-      this.firebaseService.subSingleGame(params['id']).then( () => {
-        this.updateGameData();
+
+      this.gameSub = this.firebaseService.subSingleGame(params['id']).subscribe( (gameData) => {
+        this.updateGameData(gameData);
         console.log(this.game);
-      }).catch((err) => {
+      },((err) => {
         console.warn(err);
-      });
+      }));
     }); 
   }
 
-  updateGameData() {
-    this.game.players = this.firebaseService.gameData.players;
-    this.game.currentPlayer = this.firebaseService.gameData.currentPlayer;
-    this.game.stack = this.firebaseService.gameData.stack;
-    this.game.playedCards = this.firebaseService.gameData.playedCards;
+  ngOnDestroy(): void {
+    if(this.gameSub) {
+      this.gameSub.unsubscribe();
+    }
+  }
+
+  updateGameData(gameData:any) {
+    this.game.players = gameData.players;
+    this.game.currentPlayer = gameData.currentPlayer;
+    this.game.stack = gameData.stack;
+    this.game.playedCards = gameData.playedCards;
   }
 
   async newGame() {
