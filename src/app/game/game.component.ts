@@ -79,13 +79,20 @@ export class GameComponent implements OnInit, OnDestroy {
           this.pickCardAnimation = false;
           (this.game as Game).playedCards.push(this.currentCard);
           this.nextPlayer();
-          console.log('games stack is: ',this.game.stack);
+          console.log('games stack is: ', this.game.stack);
+          this.updateGameInFirestore();
         }, 1000);
       }
       else if (this.game.players.length === 0) {
         alert('Please add players first');
       }
     }
+  }
+
+  updateGameInFirestore() {
+    this.aRoute.params.subscribe((params)=>{
+      this.firebaseService.updateGame(params['id'], this.game.toJSON());
+    })
   }
 
   nextPlayer() {
@@ -106,6 +113,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((name: string) => {
       this.addPlayerToPlayersArray(name);
+      this.updateGameInFirestore();
     });
   }
 

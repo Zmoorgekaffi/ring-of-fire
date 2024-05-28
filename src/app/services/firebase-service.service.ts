@@ -1,5 +1,5 @@
 import { Injectable, inject, OnDestroy } from '@angular/core';
-import { Firestore, collection, doc, onSnapshot, addDoc } from '@angular/fire/firestore';
+import { Firestore, collection, doc, onSnapshot, addDoc, updateDoc } from '@angular/fire/firestore';
 import { unsubscribe } from 'node:diagnostics_channel';
 import { stringify } from 'node:querystring';
 import { Observable, Subscription } from 'rxjs';
@@ -73,6 +73,15 @@ export class FirebaseServiceService {
       return newGame['id'];
     } catch (error) {
       return false;
+    }
+  }
+
+  async updateGame(gameId:string, gameData:any) {
+    try {
+      let docRef = doc(this.getColRef('games'), gameId);
+      await updateDoc(docRef, gameData)
+    } catch (err) {
+      console.warn('ein fehler ist aufgetreten: ', err)
     }
   }
 
