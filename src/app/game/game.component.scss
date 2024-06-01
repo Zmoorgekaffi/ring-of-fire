@@ -69,9 +69,40 @@
     }
 }
 
+@media (max-width: 1024px) {
+    .field {
+        position: relative;
+    }
+
+    .card-stack {
+        position: absolute;
+        transform: translateX(0px);
+        transform: translateY(42px);
+        left: 10%;
+
+    }
+}
+
+@media (max-width: 800px) {
+    .info-card{
+        bottom: 24px;
+        left: 21px;
+        right: none;
+        height: 140px;
+        width: 240px;
+        overflow-x: hidden;
+    }
+}
+
 @media (max-width: 742px) {
     .info-card {
         right: 196px;
+    }
+
+    .card-stack {
+        img {
+            @include div-sizing(80px, 140px);
+        }
     }
 }
 

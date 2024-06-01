@@ -21,7 +21,6 @@ export class StartScreenComponent {
 
   startNewGame() {
     let game = new Game()
-    game.players.push('ben');
     this.fireService.addGame((game).toJSON()).then( (gameId) => {
       if(gameId){
         this.router.navigateByUrl(`/game/${gameId}`);

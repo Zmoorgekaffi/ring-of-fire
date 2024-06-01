@@ -10,7 +10,9 @@ interface GameData {
   players: [],
   playedCards: [],
   currentPlayer: number,
-  stack: []
+  stack: [],
+  currentCard: string,
+  pickCardAnimation: boolean
 }
 
 @Injectable({
@@ -26,7 +28,9 @@ export class FirebaseServiceService {
     players: [],
     playedCards: [],
     currentPlayer: 0,
-    stack: []
+    stack: [],
+    currentCard: '',
+    pickCardAnimation: false
   };
   gameId: string = '';
 
@@ -61,6 +65,8 @@ export class FirebaseServiceService {
     this.gameData.playedCards = docData['playedCards'];
     this.gameData.stack = docData['stack'];
     this.gameData.currentPlayer = docData['currentPlayer'];
+    this.gameData.currentCard = docData['currentCard'];    
+    this.gameData.pickCardAnimation = docData['pickCardAnimation'];
   }
 
   getColRef(colId: string) {

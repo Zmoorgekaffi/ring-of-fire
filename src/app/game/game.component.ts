@@ -30,8 +30,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GameComponent implements OnInit, OnDestroy {
 
-  currentCard: string = '';
-  pickCardAnimation: boolean = false;
+ 
   public game: Game;
   gameSub: any;
 
@@ -62,6 +61,8 @@ export class GameComponent implements OnInit, OnDestroy {
     this.game.currentPlayer = gameData.currentPlayer;
     this.game.stack = gameData.stack;
     this.game.playedCards = gameData.playedCards;
+    this.game.currentCard = gameData.currentCard;
+    this.game.pickCardAnimation = gameData.pickCardAnimation;
   }
 
   async newGame() {
@@ -72,15 +73,20 @@ export class GameComponent implements OnInit, OnDestroy {
 
   takeCard(): void {
     if (this.game instanceof Game) {
-      if (this.pickCardAnimation == false && this.game.stack.length > 0 && this.game.players.length !== 0) {
-        this.pickCardAnimation = true;
-        this.currentCard = this.game.stack.pop()!;
+      if (this.game.pickCardAnimation == false && this.game.stack.length > 0 && this.game.players.length !== 0) {
+        this.game.pickCardAnimation = true;
+        this.game.currentCard = this.game.stack.pop()!;
         setTimeout((): void => {
-          this.pickCardAnimation = false;
-          (this.game as Game).playedCards.push(this.currentCard);
+         
           this.nextPlayer();
-          console.log('games stack is: ', this.game.stack);
           this.updateGameInFirestore();
+          setTimeout(()=>{
+            this.game.pickCardAnimation = false;
+            (this.game as Game).playedCards.push(this.game.currentCard);
+            this.updateGameInFirestore();
+          },1000)
+          console.log('games stack is: ', this.game.stack);
+
         }, 1000);
       }
       else if (this.game.players.length === 0) {

@@ -67,15 +67,15 @@
             }
 
             <!-- current card animation -->
-            @if (pickCardAnimation) {
-            <img [ngClass]="{ 'top-card': !pickCardAnimation ,'picked-card': pickCardAnimation }"
-                [ngStyle]="{ 'left.px': 4 * 6 }" src="assets/cards/playing_cards-master/{{ currentCard }}.png" alt="">
+            @if (game.pickCardAnimation) {
+            <img [ngClass]="{ 'top-card': !game.pickCardAnimation ,'picked-card': game.pickCardAnimation }"
+                [ngStyle]="{ 'left.px': 4 * 6 }" src="assets/cards/playing_cards-master/{{ game.currentCard }}.png" alt="">
             }
 
         </div>
     </div>
 
     <!-- game info -->
-    @if(currentCard !== '' && game.players.length !== 0) {
-        <app-game-info [card]="currentCard" class="info-card"></app-game-info>
+    @if(game.currentCard !== '' && game.players.length !== 0) {
+        <app-game-info [card]="game.currentCard" class="info-card"></app-game-info>
     }
